@@ -17,6 +17,13 @@ class App extends Component {
   handleDetailsClick = (film) => {
     console.log("Fetching details for ", film.title);
     //Task 3? set current state to passed film
+    const url = `https://api.themoviedb.org/3/movie/${film.id}?api_key=${TMDB.api_key}&append_to_response=videos,images&language=en`
+    fetch(url).then(response => {
+      response.json().then(data => {
+        console.log(data) 
+        this.setState({current: data})
+      })
+    }) 
   }  
 
   render() {
@@ -27,7 +34,6 @@ class App extends Component {
         films={this.state.films} 
         handleDetailsClick={this.handleDetailsClick}
         />
-        {/*Doesn't need all the films*/}
         <FilmDetails film={this.state.current} />
         </div>
       </div>
